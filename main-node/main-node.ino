@@ -45,7 +45,7 @@ void setup()
     radio.begin();
     radio.enableAckPayload(); // Allow optional ack payloads
     radio.setDataRate(RF24_250KBPS);
-    radio.setPALevel(RF24_PA_HIGH);
+    radio.setPALevel(RF24_PA_MIN);
     radio.openReadingPipe(1, pipe);
     radio.startListening();
      radio.writeAckPayload(1, 1, 1);
