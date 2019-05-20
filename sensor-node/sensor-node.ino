@@ -4,21 +4,24 @@
 #include <BME280I2C.h>
 #include <Wire.h>
 #include "printf.h"
-// #include <ArduinoJson.h>
-// #include "printf.h"
+
+#define PRINT_INFO
 
 #define CE_PIN 7
 #define CSN_PIN 8
-#define DEBUG_SERIAL false
 #define STATUS_PIN 43
+#define SENSOR_ID 1
 
 const byte pipe[5] = {'0', '0', '0', '0', '1'};
 
 struct SensorData
 {
+  byte sensorId;
   float temperature;
   float humidity;
   float pressure;
+  //double batteryVolt;
+  //long batteryVcc;
 };
 
 RF24 radio(CE_PIN, CSN_PIN);
@@ -62,12 +65,18 @@ void loop()
   delay(200);
 
   SensorData data;
+  data.sensorId = SENSOR_ID;
   data.pressure = pres;
   data.humidity = hum;
   data.temperature = temp;
-  byte ackByte;
 
+#ifdef PRINT_INFO
+  sensorDataDebug(data, Serial);
+#endif
+
+  byte ackByte;
   bool rslt;
+  
   rslt = radio.write(&data, sizeof(data));
   if (rslt)
   {
@@ -90,10 +99,21 @@ void loop()
     digitalWrite(STATUS_PIN, HIGH);
   }
 
-#ifdef DEBUG_SERIAL
-  Serial.print("Struct data size: ");
-  Serial.println(sizeof(data));
-#endif
-
   delay(3000);
 }
+
+#ifdef PRINT_INFO
+void sensorDataDebug(SensorData &data, Print &out)
+{
+  out.print("Sensor Data[");
+  out.print("id: ");
+  out.print(data.sensorId);
+  out.print("temp: ");
+  out.print(data.temperature);
+  out.print(", hum: ");
+  out.print(data.humidity);
+  out.print(", pres: ");
+  out.print(data.pressure);
+  out.println("]");
+}
+#endif
