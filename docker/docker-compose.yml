@@ -1,16 +1,16 @@
 version: "3"
 
 services:
-  influxdb:
-    image: influxdb:alpine
-    ports:
-      - 8086:8086
-    volumes:
-      - influxdb:/var/lib/influxdb
-    environment: 
-      INFLUXDB_DB: garden
-    networks:
-      garden:
+  # influxdb:
+  #   image: influxdb:alpine
+  #   ports:
+  #     - 8086:8086
+  #   volumes:
+  #     - influxdb:/var/lib/influxdb
+  #   environment: 
+  #     INFLUXDB_DB: garden
+  #   networks:
+  #     garden:
 
   chronograf:
     image: chronograf:alpine
@@ -26,16 +26,16 @@ services:
     volumes:
       - kapacitor:/var/lib/kapacitor
     environment: 
-      KAPACITOR_INFLUXDB_0_URLS_0: "http://influxdb:8086"
+      KAPACITOR_INFLUXDB_0_URLS_0: "http://192.168.3.20:8086"
     networks:
       garden:
 
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - 3000:3000
-    networks:
-      garden:
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     garden:
   
 volumes:
   influxdb:

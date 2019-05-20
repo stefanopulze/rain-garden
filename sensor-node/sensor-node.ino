@@ -16,10 +16,10 @@ const byte pipe[5] = {'0', '0', '0', '0', '1'};
 
 struct SensorData
 {
-  byte sensorId;
   float temperature;
   float humidity;
   float pressure;
+  uint8_t sensorId;
   //double batteryVolt;
   //long batteryVcc;
 };
@@ -99,7 +99,7 @@ void loop()
     digitalWrite(STATUS_PIN, HIGH);
   }
 
-  delay(3000);
+  delay(5000);
 }
 
 #ifdef PRINT_INFO
@@ -108,7 +108,7 @@ void sensorDataDebug(SensorData &data, Print &out)
   out.print("Sensor Data[");
   out.print("id: ");
   out.print(data.sensorId);
-  out.print("temp: ");
+  out.print(", temp: ");
   out.print(data.temperature);
   out.print(", hum: ");
   out.print(data.humidity);
