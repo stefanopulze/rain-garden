@@ -52,8 +52,6 @@ void setup()
     digitalWrite(STATUS_PIN, HIGH);
   }
 
-  // radio.printDetails();
-
   Wire.begin();
   bme.begin();
 }
