@@ -8,7 +8,7 @@ InfluxData buildInfluxData(String measure, byte sensorId, float value)
     InfluxData row(measure);
     char idPadded[2];
     sprintf(idPadded, "%02d", sensorId);
-    row.addTag("sensor", "sensor-"+sensorId);
+    row.addTag("sensor", "sensor-" + String(idPadded));
     row.addValue("value", value);
     return row;
 }
