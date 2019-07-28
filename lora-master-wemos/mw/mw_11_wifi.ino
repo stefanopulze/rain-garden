@@ -1,3 +1,4 @@
+#ifdef INFLUXDB_ENABLE
 void setupWifiConnection()
 {
     WiFi.begin(ssid, password); // Connect to the network
@@ -18,3 +19,4 @@ void setupWifiConnection()
     Serial.print("IP address:\t");
     Serial.println(WiFi.localIP());
 }
+#endif
