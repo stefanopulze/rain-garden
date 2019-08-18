@@ -83,10 +83,14 @@ void loop()
     delay(20);
 
 #ifdef LOW_POWER_ENABLED
+    LoRa.sleep();
+    delay(50);
     for (int i = 0; i < 10; i++)
     {
         LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
     }
+    LoRa.idle();
+    delay(50);
 #else
     delay(2000);
 #endif
